@@ -58,36 +58,59 @@ function Decipher($input, $key)
 $plainText ="";
 $cipherText ="";
 
-if 
-(isset($_POST["submit"])) {
+if (isset($_POST["submit"])) {
+$pilih=$_POST["pilih"] ;
+if ($pilih==1) {
 	$cipherText = Encipher($_POST["text"], $_POST["angka"]);
 	$plainText = Decipher($cipherText, $_POST["angka"]);
-}
+}else {
+	$plainText = Decipher($_POST["text"], $_POST["angka"]);
+	$cipherText = Encipher($plainText, $_POST["angka"]);
+}}
  ?>
 <body>
 
 <form action="" method="post">
 	<center>
+
 	<table>
 		<tr>
-		<tr>
 		<td><b>Plain Text</b></td><td></td>
-			<td><textarea name="text" ></textarea></td>
-			
+			<td><textarea name="text"></textarea></td>
 		</tr>
 		<tr>
 		<td><b>Key</b></td><td></td>
 			<td><input type="number" name="angka"></td>
 		</tr>
 		<tr>
-		<td></td><td></td>
-			<td><button type="submit" name="submit">Enkripsi</button>
+		<td><b>Pilih</b></td><td></td>
+		<td>
+		<select name="pilih">
+ 		<option value="1"> Enkripsi</option>
+ 		<option value="2"> Dekripsi</option>
+ 		</select>
+		</td>
 		</tr>
-		
+		<td></td><td></td>
+			<td><button type="submit" name="submit">Submit</button>
+		</tr>
+		<?php if(isset($_POST["submit"])){
+				$pilih=$_POST["pilih"] ;
+				if ($pilih==1) {
+					echo $plainText;
+				}else{
+					echo $cipherText; 
+				}
+			} ?>
 		<tr>
 			<td><b>Chipher Text</b></td><td></td>
 			<td><textarea name="hasil" ><?php if(isset($_POST["submit"])){
-				echo $cipherText;
+				$pilih=$_POST["pilih"] ;
+				if ($pilih==1) {
+				echo $cipherText ;
+				}else{
+				echo $plainText;
+				}
 			} ?></textarea></td>
 		</tr>
 	</table>
